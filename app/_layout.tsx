@@ -20,6 +20,9 @@ export default function RootLayout() {
         }}
       >
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+        <Stack.Screen name="auth/login" options={{ headerShown: false }} />
+        <Stack.Screen name="auth/register" options={{ headerShown: false }} />
+        <Stack.Screen name="bookings/index" options={{ headerShown: false }} />
         <Stack.Screen 
           name="club/[id]" 
           options={{ 
@@ -28,7 +31,14 @@ export default function RootLayout() {
           }} 
         />
         <Stack.Screen 
-          name="booking/[id]" 
+          name="booking/confirm" 
+          options={{ 
+            headerShown: false,
+            presentation: 'card',
+          }} 
+        />
+        <Stack.Screen 
+          name="booking/success" 
           options={{ 
             headerShown: false,
             presentation: 'card',

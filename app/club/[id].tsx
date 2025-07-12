@@ -20,17 +20,17 @@ import {
   Clock 
 } from 'lucide-react-native';
 import Colors from '@/constants/colors';
-import { CLUBS } from '@/constants/mockData';
+import { CLUBS, TIME_SLOTS } from '@/constants/mockData';
 import { useUserStore } from '@/store/userStore';
 import CalendarSelector from '@/components/CalendarSelector';
 import TimeSlotSelector from '@/components/TimeSlotSelector';
-import { DAYS_OF_WEEK, TIME_SLOTS } from '@/constants/mockData';
+import { DAYS_OF_WEEK } from '@/constants/mockData';
 import { useBookingStore } from '@/store/bookingStore';
 
 export default function ClubDetailScreen() {
   const { id } = useLocalSearchParams();
   const router = useRouter();
-  const { favoriteClubs, actions } = useUserStore();
+  const { user, favoriteClubs, actions } = useUserStore();
   const { selectedDay, selectedTime, actions: bookingActions } = useBookingStore();
   
   const club = CLUBS.find(c => c.id === id) || CLUBS[0];
@@ -62,6 +62,11 @@ export default function ClubDetailScreen() {
   };
 
   const handleBookCourt = () => {
+    if (!user) {
+      router.push('/auth/login');
+      return;
+    }
+
     if (selectedTime) {
       router.push({
         pathname: `/booking/confirm`,
@@ -255,7 +260,9 @@ export default function ClubDetailScreen() {
               onPress={handleBookCourt}
               disabled={!selectedTime}
             >
-              <Text style={styles.bookButtonText}>Book Court</Text>
+              <Text style={styles.bookButtonText}>
+                {!user ? 'Sign In to Book' : 'Book Court'}
+              </Text>
             </TouchableOpacity>
           </View>
         )}

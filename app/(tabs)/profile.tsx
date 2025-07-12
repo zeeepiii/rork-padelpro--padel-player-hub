@@ -8,7 +8,12 @@ import { useRouter } from 'expo-router';
 
 export default function ProfileScreen() {
   const router = useRouter();
-  const { user } = useUserStore();
+  const { user, actions } = useUserStore();
+
+  const handleSignOut = () => {
+    actions.setUser(null);
+    router.replace('/');
+  };
 
   if (!user) {
     return (
@@ -18,7 +23,7 @@ export default function ProfileScreen() {
           <Text style={styles.noUserText}>Please sign in to view your profile</Text>
           <TouchableOpacity 
             style={styles.signInButton}
-            onPress={() => router.push('/login')}
+            onPress={() => router.push('/auth/login')}
           >
             <Text style={styles.signInButtonText}>Sign In</Text>
           </TouchableOpacity>
@@ -50,7 +55,7 @@ export default function ProfileScreen() {
             </View>
             <View style={styles.statDivider} />
             <View style={styles.statItem}>
-              <Text style={styles.statValue}>{Math.round((user.wins / user.matches) * 100)}%</Text>
+              <Text style={styles.statValue}>{user.matches > 0 ? Math.round((user.wins / user.matches) * 100) : 0}%</Text>
               <Text style={styles.statLabel}>Win Rate</Text>
             </View>
           </View>
@@ -111,6 +116,19 @@ export default function ProfileScreen() {
                 <Settings size={20} color="#64748b" />
               </View>
               <Text style={styles.menuItemText}>Account Settings</Text>
+            </View>
+            <ChevronRight size={20} color={Colors.text.gray} />
+          </TouchableOpacity>
+
+          <TouchableOpacity 
+            style={styles.menuItem}
+            onPress={handleSignOut}
+          >
+            <View style={styles.menuItemLeft}>
+              <View style={[styles.menuItemIcon, { backgroundColor: '#fee2e2' }]}>
+                <Settings size={20} color="#dc2626" />
+              </View>
+              <Text style={[styles.menuItemText, { color: '#dc2626' }]}>Sign Out</Text>
             </View>
             <ChevronRight size={20} color={Colors.text.gray} />
           </TouchableOpacity>

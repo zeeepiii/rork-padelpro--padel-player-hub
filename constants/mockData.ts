@@ -110,9 +110,20 @@ export const MATCHES = [
 ];
 
 export const TIME_SLOTS = [
-  "16:00", "16:30", "17:00", "17:30", "18:00", 
-  "18:30", "19:00", "19:30", "20:00", "20:30",
-  "21:00", "21:30", "22:00", "22:30"
+  { time: "16:00", available: true, price: 25, players: [{ name: "Maria", level: 3.2 }] },
+  { time: "16:30", available: false, price: 25 },
+  { time: "17:00", available: true, price: 25 },
+  { time: "17:30", available: true, price: 30, players: [{ name: "Carlos", level: 3.8 }, { name: "Ana", level: 3.5 }] },
+  { time: "18:00", available: true, price: 30 },
+  { time: "18:30", available: false, price: 30 },
+  { time: "19:00", available: true, price: 35, players: [{ name: "Luis", level: 4.0 }] },
+  { time: "19:30", available: true, price: 35 },
+  { time: "20:00", available: false, price: 35 },
+  { time: "20:30", available: true, price: 40 },
+  { time: "21:00", available: true, price: 40 },
+  { time: "21:30", available: false, price: 40 },
+  { time: "22:00", available: true, price: 30 },
+  { time: "22:30", available: true, price: 30 },
 ];
 
 export const DAYS_OF_WEEK = [

@@ -34,6 +34,14 @@ export default function HomeScreen() {
     actions.enableLocation();
   };
 
+  const handleBookCourt = () => {
+    if (!user) {
+      router.push('/auth/login');
+    } else {
+      router.push('/');
+    }
+  };
+
   return (
     <View style={styles.container}>
       <Header />
@@ -41,15 +49,26 @@ export default function HomeScreen() {
       <ScrollView style={styles.scrollView}>
         <View style={styles.welcomeContainer}>
           <Text style={styles.welcomeText}>
-            Quel est ton état d'esprit aujourd'hui, {user?.name}?
+            {user 
+              ? `Quel est ton état d'esprit aujourd'hui, ${user.name}?`
+              : 'Welcome to Playatomic!'
+            }
           </Text>
+          {!user && (
+            <TouchableOpacity 
+              style={styles.signInButton}
+              onPress={() => router.push('/auth/login')}
+            >
+              <Text style={styles.signInButtonText}>Sign In</Text>
+            </TouchableOpacity>
+          )}
         </View>
 
         <View style={styles.actionsContainer}>
           <ActionButton
             icon={<Bolt size={28} color={Colors.text.dark} />}
             label="Réservez un court"
-            onPress={() => router.push('/booking')}
+            onPress={handleBookCourt}
           />
           <ActionButton
             icon={<GraduationCap size={28} color={Colors.text.dark} />}
@@ -126,6 +145,18 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: Colors.text.light,
     marginBottom: 16,
+  },
+  signInButton: {
+    backgroundColor: Colors.secondary,
+    paddingVertical: 12,
+    paddingHorizontal: 24,
+    borderRadius: 8,
+    alignSelf: 'flex-start',
+  },
+  signInButtonText: {
+    color: Colors.text.dark,
+    fontWeight: 'bold',
+    fontSize: 16,
   },
   actionsContainer: {
     flexDirection: 'row',
